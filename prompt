@@ -1,0 +1,178 @@
+Build a premium, modern, fully functional frontend web application called Phantom Classrooms - Campus Energy Intelligence, a hackathon project for Synesis 26.
+
+1. Product vision
+
+Create an intelligent campus energy monitoring dashboard that detects probable energy waste by combining simulated camera-based occupancy estimates, motion sensor data, class timetables, equipment status, and energy consumption estimates.
+
+The product must feel like a polished commercial SaaS product, suitable for a university innovation competition. Do not create a generic admin dashboard or a simple student project interface.
+
+2. Technology stack
+
+- React with Vite
+- TypeScript
+- Tailwind CSS
+- shadcn/ui where appropriate
+- Recharts for interactive charts
+- Lucide React for icons
+- React Router for navigation
+- Local mock data and localStorage for persistence
+
+The application must run locally without API keys, a backend, a cloud service, or Wi-Fi hardware.
+
+3. Visual direction
+
+Use the supplied reference image as design inspiration.
+
+- Dark navy left sidebar, approximately 240px wide on desktop.
+- Light cool-gray application background.
+- White cards with subtle borders and soft shadows.
+- Electric-blue primary buttons and selected navigation.
+- Green for verified savings and safe states.
+- Amber for uncertain conditions.
+- Red for high-priority verification alerts.
+- Inter typography, generous spacing, clean alignment, restrained rounded corners.
+- High information density without visual clutter.
+- Consistent spacing, typography, button styles, status chips, and card layouts.
+- Responsive layouts for laptops, tablets, and mobile devices.
+
+Avoid excessive gradients, oversized headings, unnecessary animations, emoji icons, and generic template styling.
+
+4. Application layout
+
+Create a persistent sidebar with:
+
+1. Overview
+2. Rooms
+3. Analytics
+4. Alerts
+5. Settings
+
+Include a top header with the page title, simulated data status, and notification indicator.
+
+5. Overview page
+
+Create:
+
+- KPI cards for monitored rooms, rooms needing verification, estimated avoidable energy in kWh, and estimated cost savings in INR.
+- A room status table with occupancy estimate, timetable status, motion status, lights, AC, projector, waste score, and alert status.
+- An energy waste distribution chart.
+- Potential savings panel.
+- High-priority alerts section.
+- Room ranking section.
+
+Use realistic sample data for at least six rooms.
+
+6. Room details page
+
+Each room must have its own detailed view containing:
+
+- Room identifier and current simulated status.
+- Simulated camera preview panel with a clear "SIMULATED DATA" label.
+- Occupancy count and confidence score.
+- Timetable state and motion status.
+- Equipment status for lights, AC, and projector.
+- Waste score from 0 to 100.
+- An explainable list of reasons for the alert.
+- Estimated avoidable energy and cost.
+- Actions: Mark Reviewed, Mark Safe, and Manual Override.
+
+The camera preview is illustrative only. Do not claim that a real camera or computer vision is connected.
+
+7. Analytics page
+
+Include:
+
+- Interactive energy consumption trend chart.
+- Estimated avoidable energy trend.
+- Room comparison by waste score.
+- Estimated daily, weekly, and monthly cost savings.
+- Recurring problem-room ranking.
+- Date-range filtering.
+- Clearly label all simulated measurements and estimates.
+
+8. Alerts page
+
+Create a prioritized alert queue with:
+
+- High, medium, and low priority.
+- Room name.
+- Alert explanation.
+- Estimated energy waste.
+- Confidence score.
+- Timestamp from simulated data.
+- View Details, Mark Reviewed, Dismiss, and Override actions.
+
+Conflicting occupancy evidence must produce a verification-required state rather than an automatic shutdown recommendation.
+
+9. Settings and Kindness Rule
+
+Provide settings for:
+
+- Simulated timetable configuration.
+- Occupancy confidence thresholds.
+- Equipment power assumptions.
+- Electricity tariff in ₹/kWh.
+- Manual room override.
+- Mark room as intentionally occupied.
+- Mark equipment as intentionally required.
+
+Manual overrides must suppress switch-off recommendations for the affected room or equipment until the override is cleared.
+
+10. Decision engine
+
+Separate the decision logic from the UI.
+
+Use a transparent starter heuristic:
+
+emptyConfidence = 0.40 × timetableEnded
++ 0.40 × cameraReportsZeroPeople
++ 0.20 × noRecentMotion
+
+Use binary inputs of 0 or 1. Treat the result as a heuristic score, not a statistically calibrated probability.
+
+When equipment is ON and probable waste is detected:
+wasteScore = 100 × emptyConfidence × equipmentWasteFactor
+
+equipmentWasteFactor ranges from 0 to 1.
+
+If camera occupancy is positive while the motion sensor reports no recent movement, flag conflicting evidence and request verification.
+
+An active human override always takes precedence over a switch-off recommendation.
+
+Never automatically control actual electrical equipment.
+
+11. Interactions
+
+Every visible button and filter must work.
+
+- Sidebar navigation changes pages.
+- Clicking a room opens its details.
+- Filters update the room table and alert queue.
+- Charts update when relevant mock data changes.
+- Equipment toggles change simulated equipment state.
+- Override controls immediately update recommendations.
+- Mark Reviewed and Dismiss update alert status.
+- Calculations recalculate when tariff or power assumptions change.
+- Persist relevant demo settings and user actions in localStorage.
+
+12. Engineering quality
+
+Use reusable React components, typed data models, clean component separation, accessible labels, loading-free local startup, responsive layouts, and sensible empty states.
+
+Do not add fake authentication, nonfunctional controls, invented real-time telemetry, or decorative charts that do not use application data.
+
+13. Deliverables
+
+Create a complete runnable project with:
+
+- All React and TypeScript source files.
+- Reusable UI components.
+- Sample room and timetable data.
+- Decision-engine logic.
+- Energy and cost calculation utilities.
+- Working charts, filters, and override interactions.
+- README with installation and startup instructions.
+
+Install dependencies, run the application, inspect it in the browser, test every navigation item and primary interaction, and fix build errors and obvious UI defects before declaring completion.
+
+Prioritize a cohesive, polished, functional application over adding unnecessary features.
